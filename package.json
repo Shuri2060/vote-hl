@@ -1,0 +1,27 @@
+{
+  "name": "vote-hl",
+  "version": "0.0.0",
+  "description": "Hyperliquid Hackathon 2025/09/21 Seoul",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shuri2060 & kjr217",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shuri2060/vote-hl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shuri2060/vote-hl/issues"
+  },
+  "homepage": "https://github.com/Shuri2060/vote-hl#readme",
+  "dependencies": {
+    "@msgpack/msgpack": "3.0.0-beta2",
+    "ethers": "6.15.0"
+  },
+  "devDependencies": {
+    "solc": "^0.8.30"
+  }
+}
