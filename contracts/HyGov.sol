@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {L1Read} from 'contracts/L1Read.sol';
+import {L1Read} from "contracts/L1Read.sol";
 
 contract HyGov {
-
     mapping(uint256 => Vote) public votes;
     mapping(uint256 => Poll) public polls;
     mapping(uint256 => mapping(uint256 => uint256)) public tallies;
@@ -35,39 +34,49 @@ contract HyGov {
 
     event PollCreated(uint256 indexed pollId);
     event PollEnded(uint256 indexed pollId);
-    event VotePushed(uint256 indexed pollId, address[] voters, uint256[] choices);
+    event VotePushed(
+        uint256 indexed pollId,
+        address[] voters,
+        uint256[] choices
+    );
 
     function createPoll(
-        string memory question, 
-        string memory description, 
-        uint256 startDate, 
+        string memory question,
+        string memory description,
+        uint256 startDate,
         uint256 endDate,
         uint256 minStake,
         address creator
-        ) external returns (uint256 pollId) {
-            pollId = pollCount;
-            polls[pollId] = Poll(question, description, startDate, endDate, minStake, creator);
-            pollCount++;
-            emit PollCreated(pollId);
-            return pollId;
-        }
+    ) external returns (uint256 pollId) {
+        pollId = pollCount;
+        polls[pollId] = Poll(
+            question,
+            description,
+            startDate,
+            endDate,
+            minStake,
+            creator
+        );
+        pollCount++;
+        emit PollCreated(pollId);
+        return pollId;
+    }
 
-    function endPoll(
-        uint256 pollId
-    ) external {
+    function endPoll(uint256 pollId) external {
         require(polls[pollId].endDate < block.timestamp, "Poll has not ended");
         require(votes[pollId].timestamp > 0, "Votes have not been pushed");
         tally(pollId);
         emit PollEnded(pollId);
     }
-    
-    function tally(
-        uint256 pollId
-    ) internal {
+
+    function tally(uint256 pollId) internal {
         for (uint256 i = 0; i < votes[pollId].voters.length; i++) {
-            L1Read.Delegation[] memory delegations = read.delegations(votes[pollId].voters[i]);
+            L1Read.Delegation[] memory delegations = read.delegations(
+                votes[pollId].voters[i]
+            );
             for (uint256 j = 0; j < delegations.length; j++) {
-                tallies[pollId][votes[pollId].choices[i]] += delegations[j].amount;
+                tallies[pollId][votes[pollId].choices[i]] += delegations[j]
+                    .amount;
             }
         }
     }
@@ -78,20 +87,22 @@ contract HyGov {
         uint256[] memory choices
     ) external {
         require(msg.sender == oracle, "Only the oracle can push votes");
-        require(voters.length == choices.length, "Voters and choices must be the same length");
-        
+        require(
+            voters.length == choices.length,
+            "Voters and choices must be the same length"
+        );
+
         // Push each voter individually
         for (uint256 i = 0; i < voters.length; i++) {
             votes[pollId].voters.push(voters[i]);
         }
-        
+
         // Push each choice individually
         for (uint256 i = 0; i < choices.length; i++) {
             votes[pollId].choices.push(choices[i]);
         }
-        
+
         votes[pollId].timestamp = block.timestamp;
         emit VotePushed(pollId, voters, choices);
     }
-
 }
