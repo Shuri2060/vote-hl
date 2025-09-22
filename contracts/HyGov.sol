@@ -13,13 +13,13 @@ contract HyGov {
     uint256 public pollCount;
 
     constructor(address _oracle, address _read) {
-        read = L1Read(_read);
         oracle = _oracle;
+        read = L1Read(_read);
     }
 
     struct Poll {
         string question;
-        string description;
+        string[] choices;
         uint256 startDate;
         uint256 endDate;
         uint256 minStake;
@@ -41,26 +41,19 @@ contract HyGov {
     );
 
     function createPoll(
-        string memory question,
-        string memory description,
-        uint256 startDate,
+        string memory question, 
+        string[] memory choices, 
+        uint256 startDate, 
         uint256 endDate,
         uint256 minStake,
         address creator
-    ) external returns (uint256 pollId) {
-        pollId = pollCount;
-        polls[pollId] = Poll(
-            question,
-            description,
-            startDate,
-            endDate,
-            minStake,
-            creator
-        );
-        pollCount++;
-        emit PollCreated(pollId);
-        return pollId;
-    }
+        ) external returns (uint256 pollId) {
+            pollId = pollCount;
+            polls[pollId] = Poll(question, choices, startDate, endDate, minStake, creator);
+            pollCount++;
+            emit PollCreated(pollId);
+            return pollId;
+        }
 
     function endPoll(uint256 pollId) external {
         require(polls[pollId].endDate < block.timestamp, "Poll has not ended");
