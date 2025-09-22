@@ -1,66 +1,24 @@
-## Foundry
+HyGov is a hypercore native system to start, track and participate in hyperliquid governance proposals. 
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Technical flow is as follows:
 
-Foundry consists of:
+1. A vote creator who wishes to initiate a poll will create a poll on the hyperevm contract HyGov.sol using the following structure: 
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+    struct Poll {
+        string question;
+        string[] choices;
+        uint256 startDate;
+        uint256 endDate;
+        uint256 minStake;
+        address creator;
+    }
 
-## Documentation
+This returns a pollId
 
-https://book.getfoundry.sh/
+2. Once made, voters will go to the UI and vote, the vote operates by sending USDC dust which is encoded with their choice number to the creator address. For example for choice 1, the voter will send 1 wei, choice 2, 2 wei etc.
 
-## Usage
+3. These transfers will be tracked by an oracle system, and will be accounted for and pushed to the HyGov.sol votes variable. This represents the voter's intended choice.
 
-### Build
+4. Once the poll has ended, the endPoll function will be called, this will look at all the choices pushed by the voters and will weight each depending on their delegated balance on the validator, which is retrieved from the L1Read.sol contract.
 
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+5. Once the poll has concluded the winning choice of the vote can be retrieved.
