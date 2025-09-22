@@ -9,7 +9,7 @@ The backend of the project pushes to the Oracle which user has voted for which o
 
 Notes / Caveats / Areas of Improvement:
 - Each validator can only hold one active poll
-- The frontend is coded using vanilla html and js for maximum simplicity and minimum dependency reliance. It only depends on 2 js libraries: ethers.js and messagepack. While simple, there are multiple areas for improvement that are not yet implemented due to time constraints:
+- The frontend is coded using vanilla html and js for maximum simplicity and minimum dependency reliance. It only depends on 1 js libraries: ethers.js. While simple, there are multiple areas for improvement that are not yet implemented due to time constraints:
   - display results of previous polls
   - display ongoing results of current polls
   - display historical votes of a connected user

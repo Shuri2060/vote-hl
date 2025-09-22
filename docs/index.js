@@ -1,5 +1,4 @@
 import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
-const encode = MessagePack.encode
 import hyGovAbi from './hyGovAbi.json' with { type: 'json' }
 
 const isMainnet = false
