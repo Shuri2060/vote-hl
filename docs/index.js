@@ -10,7 +10,7 @@ const rpcUrl = 'https://rpc.hyperliquid-testnet.xyz/evm'
 const provider = new ethers.JsonRpcProvider(rpcUrl, chainId)
 
 const hyGovContract = new ethers.Contract(
-    '0x18659C4EAd62aF2ba3321C6190A0acb324360bc5',
+    '0xDB6b3d45EA9a77E5B14E30c570294bE3EEA802Cd',
     hyGovAbi,
     provider,
 )
@@ -31,11 +31,17 @@ async function loadPolls() {
         //     address creator
         // }
     }
-    return polls
+    displayPolls(polls)
 }
 
 function displayPolls(polls) {
+    for (const poll of polls) {
+        if (Date.now() < poll.endDate * 1000) {
+            document.
+        } else {
 
+        }
+    }
 }
 
 ////////////////////////////////////
@@ -47,7 +53,7 @@ console.log('')
 
 console.log(await hyGovContract.polls(0))
 console.log((await hyGovContract.polls(0))[0]) // question
-console.log((await hyGovContract.polls(0))[1]) // description
+console.log((await hyGovContract.polls(0))[1]) // choices
 console.log((await hyGovContract.polls(0))[2]) // startdate
 console.log((await hyGovContract.polls(0))[3]) // enddate
 console.log((await hyGovContract.polls(0))[4]) // minstake

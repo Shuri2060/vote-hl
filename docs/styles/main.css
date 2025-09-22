@@ -1,3 +1,11 @@
 main {
     padding: 20px;
 }
+
+.loading {
+  display: none;
+}
+
+.loading:only-child {
+  display: block;
+}

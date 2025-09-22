@@ -25,9 +25,9 @@
         "internalType": "string"
       },
       {
-        "name": "description",
-        "type": "string",
-        "internalType": "string"
+        "name": "choices",
+        "type": "string[]",
+        "internalType": "string[]"
       },
       {
         "name": "startDate",
@@ -111,11 +111,6 @@
     "outputs": [
       {
         "name": "question",
-        "type": "string",
-        "internalType": "string"
-      },
-      {
-        "name": "description",
         "type": "string",
         "internalType": "string"
       },
