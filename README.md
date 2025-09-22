@@ -1,5 +1,7 @@
 HyGov is a hypercore native system to start, track and participate in hyperliquid governance proposals. 
 
+The project allows big validators to do large trustless votes. So for example for validator governance during the usdh vote, hypurr collective could have used this tool to easily and trustily gather the votes of their stakers. This has the potential to drastically improve the governance process in terms of visibility, trustlessness and efficiency.
+
 Technical flow is as follows:
 
 1. A vote creator who wishes to initiate a poll will create a poll on the hyperevm contract HyGov.sol using the following structure: 
