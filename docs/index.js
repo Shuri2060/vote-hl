@@ -1,71 +1,108 @@
-import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.5/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
+import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
 const encode = MessagePack.encode
 import hyGovAbi from './hyGovAbi.json' with { type: 'json' }
 
 // HCore
-const apiUrl = 'https://api.hyperliquid-testnet.xyz'
+const domain = 'hyperliquid-testnet.xyz'
+const url = `https://app.${domain}`
+const apiUrl = `https://api.${domain}`
 // HEVM
 const chainId = 998
-const rpcUrl = 'https://rpc.hyperliquid-testnet.xyz/evm'
+const rpcUrl = `https://rpc.${domain}/evm`
 const provider = new ethers.JsonRpcProvider(rpcUrl, chainId)
 
 const hyGovContract = new ethers.Contract(
-    '0xDB6b3d45EA9a77E5B14E30c570294bE3EEA802Cd',
+    '0x3Eb175779705aF2A54ed461BB2f962085f2379c6',
     hyGovAbi,
     provider,
 )
 
+loadPolls()
+
 async function loadPolls() {
     const polls = []
     const pollCount = await hyGovContract.pollCount()
+    console.info('pollCount', pollCount)
     for (let i = 0; i < pollCount; i++) {
-        const [question, choices, startDate, endDate, minStake, creator] = await hyGovContract.polls(pollCount)
-        polls[i] = { question, choices, startDate, endDate, minStake, creator }
+        const { question, startDate, endDate, minStake, creator } = await hyGovContract.polls(i)
+        const choices = await hyGovContract.getChoicesFromPoll(i)
 
-        // struct Poll {
-        //     string question;
-        //     string[] choices;
-        //     uint256 startDate;
-        //     uint256 endDate;
-        //     uint256 minStake;
-        //     address creator
-        // }
+        polls[i] = { id: i, question, choices, startDate, endDate, minStake, creator }
     }
     displayPolls(polls)
 }
 
+function exactStringUSDC(wei) {
+    const value = wei * 1e-8
+    return value.toFixed(8)
+}
+
+
+
 function displayPolls(polls) {
     for (const poll of polls) {
-        if (Date.now() < poll.endDate * 1000) {
-            document.
-        } else {
+        const isActive = BigInt(Date.now()) < poll.endDate * 1000n
+        const pollItem = document.createElement('div')
+        pollItem.className = 'poll-item'
 
+        const pollQuestion = document.createElement('h3')
+        pollQuestion.textContent = poll.question
+        pollItem.appendChild(pollQuestion)
+
+        const voteInstruction = document.createElement('p')
+        voteInstruction.className = 'vote-instruction'
+        voteInstruction.style.display = 'none'
+        pollItem.appendChild(voteInstruction)
+
+        for (let i = 0; i < poll.choices.length; i++) {
+            const optionContainer = document.createElement('div')
+            optionContainer.className = 'poll-option'
+
+            const optionParagraph = document.createElement('div')
+            optionParagraph.innerHTML = '<label class="poll-label">' + `<input type="radio" name="${poll.id}" value="${i}"${isActive ? '' : ' disabled'}>` + poll.choices[i] + '</label>'
+
+            const radioInput = optionParagraph.querySelector('input[type="radio"]')
+            radioInput.addEventListener('change', () => {
+                if (radioInput.checked) {
+                    const wei = Number(radioInput.value) + 1
+                    const address = poll.creator
+
+                    const amountSpan = `<span onclick="navigator.clipboard.writeText(this.textContent)" style="background-color: #404040; cursor: pointer; padding: 1px 4px; border-radius:9999px;" title="Click to copy">${exactStringUSDC(wei)}</span>`
+                    const addressSpan = `<span onclick="navigator.clipboard.writeText(this.textContent)" style="background-color: #404040; cursor: pointer; padding: 1px 4px; border-radius:9999px;" title="Click to copy">${address}</span>`
+                    voteInstruction.innerHTML = `To vote for this option, send ${amountSpan} USDC (spot) to ${addressSpan} on HyperCore. You can do this using the official <a href="${url}" target="_blank" rel="noopener noreferrer">Hyperliquid frontend</a> or clicking Vote below.`
+                    voteInstruction.style.display = 'block'
+                } else {
+                    voteInstruction.style.display = 'none'
+                }
+            })
+
+            optionContainer.appendChild(optionParagraph)
+            pollItem.appendChild(optionContainer)
         }
+
+        if (isActive) {
+            const voteButton = document.createElement('button')
+            voteButton.textContent = 'Vote'
+            voteButton.disabled = true
+            pollItem.appendChild(voteButton)
+
+            const radioInputs = pollItem.querySelectorAll('input[type="radio"]')
+            radioInputs.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    voteButton.disabled = !pollItem.querySelector('input[type="radio"]:checked')
+                    if (radio.checked) {
+                        const wei = Number(radio.value) + 1
+                        const address = poll.creator
+                        voteButton.onclick = () => submitVote(wei, address)
+                    }
+                })
+            })
+        }
+
+        document.getElementById(isActive ? 'polls' : 'ended-polls')?.appendChild(pollItem)
     }
 }
 
-////////////////////////////////////
-// Test
-
-console.log(await hyGovContract.oracle())
-
-console.log('')
-
-console.log(await hyGovContract.polls(0))
-console.log((await hyGovContract.polls(0))[0]) // question
-console.log((await hyGovContract.polls(0))[1]) // choices
-console.log((await hyGovContract.polls(0))[2]) // startdate
-console.log((await hyGovContract.polls(0))[3]) // enddate
-console.log((await hyGovContract.polls(0))[4]) // minstake
-console.log((await hyGovContract.polls(0))[5]) // creator
-
-console.log('')
-
-console.log(await hyGovContract.votes(0))
-
-
-
-//     struct Vote {
-//     address[] voters
-//     uint256[] choices;
-//     uint256 timestamp
+function submitVote(wei, address) {
+    console.log(wei, address)
+}

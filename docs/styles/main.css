@@ -9,3 +9,7 @@ main {
 .loading:only-child {
   display: block;
 }
+
+a {
+    color: #50d2c1;
+}
