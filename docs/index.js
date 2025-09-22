@@ -104,15 +104,15 @@ function displayPolls(polls) {
 
 async function submitVote(wei, targetAddress) {
     const addresses = await walletConnect(chainIdCore)
-    const address = addresses[0]
+    const address = addresses[0].toLowerCase()
     const nonce = Date.now()
     const action = {
         "type": "spotSend",
         "hyperliquidChain": "Testnet",
         "signatureChainId": "0x66eee",
-        "destination": targetAddress,
+        "destination": targetAddress.toLowerCase(),
         "token": "USDC:0xeb62eee3685fc4c43992febcd9e75443",
-        "amount": exactStringUSDC(wei),
+        "amount": String(wei * 1e-8),
         "time": nonce,
     }
     const result = await postAsync({ url: apiUrl, endpoint: '/exchange', payload: await payloadExchangeWalletAsync({ isMainnet, address, action, nonce }) })
@@ -149,7 +149,7 @@ async function signWalletL1ActionAsync({ isMainnet, address, action }) {
                     ],
                     "HyperliquidTransaction:SpotSend": [
                         { "name": "hyperliquidChain", "type": "string" },
-                        { "name": "destination", "type": "address" },
+                        { "name": "destination", "type": "string" },
                         { "name": "token", "type": "string" },
                         { "name": "amount", "type": "string" },
                         { "name": "time", "type": "uint64" },
