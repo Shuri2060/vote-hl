@@ -44,6 +44,24 @@ button.blue:disabled {
     background-color: #09667e;
 }
 
+button.white {
+    color: #04060c;
+    background-color: #ffffff;
+}
+
+button.white:hover:enabled:not(:active) {
+    background-color: #e4e4e4;
+}
+
+button.white:active {
+    background-color: #c5c5c5;
+}
+
+button.white:disabled {
+    cursor: default;
+    background-color: #b8b8b8;
+}
+
 /* TODO */
 .address {
     font-family: monospace;
