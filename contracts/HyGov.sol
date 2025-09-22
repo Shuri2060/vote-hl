@@ -35,9 +35,7 @@ contract HyGov {
     event PollCreated(uint256 indexed pollId);
     event PollEnded(uint256 indexed pollId);
     event VotePushed(
-        uint256 indexed pollId,
-        address[] voters,
-        uint256[] choices
+        uint256 indexed pollId
     );
 
     function createPoll(
@@ -96,6 +94,19 @@ contract HyGov {
         }
 
         votes[pollId].timestamp = block.timestamp;
-        emit VotePushed(pollId, voters, choices);
+        emit VotePushed(pollId);
     }
+
+    function getChoicesFromPoll(uint256 pollId) external view returns (string[] memory) {
+        return polls[pollId].choices;
+    }
+
+    function getVotersFromVote(uint256 pollId) external view returns (address[] memory) {
+        return votes[pollId].voters;
+    }
+
+    function getChoicesFromVote(uint256 pollId) external view returns (uint256[] memory) {
+        return votes[pollId].choices;
+    }
+    
 }
