@@ -1,5 +1,8 @@
 # custom
 .config
+out
+broadcast
+foundry.lock
 
 # ts
 *.tsbuildinfo
