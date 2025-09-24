@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <input type="text" id="input" placeholder="seed">
+    <p>Address <span id="address"></span></p>
+    <p>Key <span id="key"></span></p>
+
+    <script type="module">
+        import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
+      
+        const inputEl = document.getElementById('input')
+        const addressEl = document.getElementById('address')
+        const keyEl = document.getElementById('key')
+
+        const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
+
+        const wallet = ethers.Wallet.fromMnemonic(SEED_PHRASE, "m/44'/60'/0'/0/0")
+        addressEl.textContent = wallet.address
+        keyEl.textContent = wallet.privateKey
+
+        inputEl.addEventListener('input', () => {
+            addressEl.textContent = inputEl.value
+            keyEl.textContent = inputEl.value
+        })
+    </script>
+</body>
+</html>
