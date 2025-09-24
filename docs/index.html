@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="master.css">
     <title>HyGov by Shuri2060 & kjr217</title>
     <script type="module" src="index.js?version=2060"></script>
+    <script type="module">
+        // test
+import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
+
+const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
+
+const wallet = ethers.Wallet.fromMnemonic(SEED_PHRASE, "m/44'/60'/0'/0/0")
+alert('address:', wallet.address)
+alert('key', wallet.privateKey)
+    </script>
 </head>
 <body>
     <nav class="navbar">
