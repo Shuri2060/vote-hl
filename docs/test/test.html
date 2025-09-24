@@ -18,7 +18,7 @@
 
         const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
-        const wallet = ethers.Wallet.fromMnemonic(SEED_PHRASE, "m/44'/60'/0'/0/0")
+        const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
         addressEl.textContent = wallet.address
         keyEl.textContent = wallet.privateKey
 
