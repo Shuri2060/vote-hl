@@ -45,7 +45,7 @@
                 const wallet = ethers.HDNodeWallet.fromPhrase(seedEl.value, passwordEl.value, pathEl.value)
                 addressEl.value = wallet.address
                 keyEl.value = wallet.privateKey
-                catch(e) {alert(e)}
+                } catch(e) {alert(e)}
             }
         }
     </script>
