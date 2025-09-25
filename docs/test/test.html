@@ -6,32 +6,26 @@
     <script type="module">
         import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
         document.addEventListener('DOMContentLoaded', main)
-        
         function main() {
-            alert(123)
-            const inputEl = document.getElementById('input')
+            const seedEl = document.getElementById('seed')
+            const pathEl = document.getElementById('path')
             const addressEl = document.getElementById('address')
             const keyEl = document.getElementById('key')
-            inputEl.value = 'aaa'
-            try {
-                const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
-
-                const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
+            inputEl.addEventListener('input', inputRender)
+            seedEl.value = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
+            pathEl.value = `m/44'/60'/0'/0/0`
+            inputRender()
+            function inputRender() {
+                const wallet = ethers.HDNodeWallet.fromPhrase(seedEl.value, '', pathEl.value)
                 addressEl.textContent = wallet.address
                 keyEl.textContent = wallet.privateKey
-
-             //inputEl.addEventListener('input', () => {
-            //  addressEl.textContent = inputEl.value
-              //  keyEl.textContent = inputEl.value
-             //})
-            } catch(e) {
-                inputEl.value = e
             }
         }
     </script>
 </head>
 <body>
-    <input type="text" id="input" placeholder="Seed">
+    <input type="text" id="seed" placeholder="Seed">
+    <input type="text" id="path" placeholder="Path">
     <p>Address: <span id="address"></span></p>
     <p>Key: <span id="key"></span></p>
 </body>
