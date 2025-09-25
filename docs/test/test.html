@@ -13,6 +13,12 @@
         color: #ffffff;
         margin: 0px;
     }
+    .input-grid {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
     </style>
     <script type="module">
         import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
@@ -39,7 +45,11 @@
     </script>
 </head>
 <body>
-    <input type="text" id="seed" placeholder="Seed Phrase" style="display: block;" size="66"><br>
+    <div class="input-grid"><label for="seed">Seed: </label><input type="text" id="seed" size="66"></div>
+    <div class="input-grid"><label for="password">Password: </label><input type="text" id="password" size="66"></div>
+    <div class="input-grid"><label for="path">Path: </label><input type="text" id="path" size="20"></div>
+    
+    <input type="text" id="seed" placeholder="Seed Phrase" size="66">
     <input type="text" id="password" placeholder="Password" style="display: block;" size="66"><br>
     <input type="text" id="path" placeholder="Path" style="display: block;" size="20"><br>
     <br>
