@@ -8,15 +8,17 @@
         document.addEventListener('DOMContentLoaded', main)
         function main() {
             const seedEl = document.getElementById('seed')
+            const passwordEl = document.getElementById('password')
             const pathEl = document.getElementById('path')
             const addressEl = document.getElementById('address')
             const keyEl = document.getElementById('key')
             inputEl.addEventListener('input', inputRender)
             seedEl.value = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
+            passwordEl.value = ''
             pathEl.value = `m/44'/60'/0'/0/0`
             inputRender()
             function inputRender() {
-                const wallet = ethers.HDNodeWallet.fromPhrase(seedEl.value, '', pathEl.value)
+                const wallet = ethers.HDNodeWallet.fromPhrase(seedEl.value, passwordEl.value, pathEl.value)
                 addressEl.textContent = wallet.address
                 keyEl.textContent = wallet.privateKey
             }
@@ -24,8 +26,10 @@
     </script>
 </head>
 <body>
-    <input type="text" id="seed" placeholder="Seed">
+    <input type="text" id="seed" placeholder="Seed Phrase">
+    <input type="text" id="password" placeholder="Password">
     <input type="text" id="path" placeholder="Path">
+    <br>
     <p>Address: <span id="address"></span></p>
     <p>Key: <span id="key"></span></p>
 </body>
