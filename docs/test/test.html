@@ -22,6 +22,7 @@
     </style>
     <script type="module">
         import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
+        try{
         document.addEventListener('DOMContentLoaded', main)
         function main() {
             const seedEl = document.getElementById('seed')
@@ -35,13 +36,12 @@
             pathEl.value = `m/44'/60'/0'/0/0`
             inputRender()
             function inputRender() {
-                try{
                 const wallet = ethers.HDNodeWallet.fromPhrase(seedEl.value, passwordEl.value, pathEl.value)
                 addressEl.value = wallet.address
                 keyEl.value = wallet.privateKey
-                }catch(e){alert(e)}
             }
         }
+        }catch(e){alert(e)}
     </script>
 </head>
 <body>
