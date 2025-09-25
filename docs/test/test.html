@@ -34,10 +34,12 @@
             const pathEl = document.getElementById('path')
             const addressEl = document.getElementById('address')
             const keyEl = document.getElementById('key')
-            inputEl.addEventListener('input', inputRender)
             seedEl.value = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
             passwordEl.value = ''
             pathEl.value = `m/44'/60'/0'/0/0`
+            seedEl.addEventListener('input', inputRender)
+            passwordEl.addEventListener('input', inputRender)
+            pathEl.addEventListener('input', inputRender)
             inputRender()
             alert(1)
             function inputRender() {
