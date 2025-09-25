@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module">
+        import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
+        document.addEventListener('DOMContentLoaded', main)
+        
+        function main() {
         alert(123)
         const inputEl = document.getElementById('input')
         const addressEl = document.getElementById('address')
         const keyEl = document.getElementById('key')
         inputEl.textContent = 'aaa'
         try {
-            import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
-      
+            
             const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
             const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
@@ -24,6 +27,7 @@
              //})
         } catch(e) {
             alert(e)
+        }
         }
     </script>
 </head>
