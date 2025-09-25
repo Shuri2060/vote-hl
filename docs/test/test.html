@@ -10,23 +10,23 @@
     <p>Key <span id="key"></span></p>
 
     <script type="module">
-        try {
-        import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
-      
         const inputEl = document.getElementById('input')
         const addressEl = document.getElementById('address')
         const keyEl = document.getElementById('key')
+        inputEl.textContent = 'aaa'
+        try {
+            import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.min.js'  // https://docs.ethers.org/v6/getting-started
+      
+            const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
-        const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
+            const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
+            addressEl.textContent = wallet.address
+            keyEl.textContent = wallet.privateKey
 
-        const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
-        addressEl.textContent = wallet.address
-        keyEl.textContent = wallet.privateKey
-
-        //inputEl.addEventListener('input', () => {
-        //  addressEl.textContent = inputEl.value
-        //  keyEl.textContent = inputEl.value
-        //})
+             //inputEl.addEventListener('input', () => {
+            //  addressEl.textContent = inputEl.value
+              //  keyEl.textContent = inputEl.value
+             //})
         } catch(e) {
             alert(e)
         }
