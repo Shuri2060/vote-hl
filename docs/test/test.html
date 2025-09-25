@@ -8,26 +8,25 @@
         document.addEventListener('DOMContentLoaded', main)
         
         function main() {
-        alert(123)
-        const inputEl = document.getElementById('input')
-        const addressEl = document.getElementById('address')
-        const keyEl = document.getElementById('key')
-        inputEl.textContent = 'aaa'
-        try {
-            
-            const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
+            alert(123)
+            const inputEl = document.getElementById('input')
+            const addressEl = document.getElementById('address')
+            const keyEl = document.getElementById('key')
+            inputEl.value = 'aaa'
+            try {
+                const SEED_PHRASE = 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'
 
-            const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
-            addressEl.textContent = wallet.address
-            keyEl.textContent = wallet.privateKey
+                const wallet = HDNodeWallet.fromPhrase(SEED_PHRASE, '', "m/44'/60'/0'/0/0")
+                addressEl.textContent = wallet.address
+                keyEl.textContent = wallet.privateKey
 
              //inputEl.addEventListener('input', () => {
             //  addressEl.textContent = inputEl.value
               //  keyEl.textContent = inputEl.value
              //})
-        } catch(e) {
-            alert(e)
-        }
+            } catch(e) {
+                inputEl.value = e
+            }
         }
     </script>
 </head>
