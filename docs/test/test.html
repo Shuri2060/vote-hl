@@ -15,9 +15,13 @@
     }
     .input-grid {
         display: grid;
-        grid-template-columns: 100px 1fr;
-        gap: 10px;
-        margin-bottom: 10px;
+        grid-template-columns: 80px 1fr;
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+    hr {
+        grid-column: 1 / -1;
+        margin: 5px 0;
     }
     </style>
     <script type="module">
@@ -46,12 +50,12 @@
 </head>
 <body>
     <div class="input-grid">
-        <label for="seed">Seed: </label><input type="text" id="seed" size="150">
-        <label for="password">Password: </label><input type="text" id="password" size="150">
-        <label for="path">Path: </label><input type="text" id="path" size="20">
-        <br>
-        <label for="address">Address: </label><input type="text" id="address" size="42" disabled>
-        <label for="key">Key: </label><input type="text" id="key" size="66" disabled>
+        <label for="seed">Seed:</label><input type="text" id="seed" size="150">
+        <label for="password">Password:</label><input type="text" id="password" size="150">
+        <label for="path">Path:</label><input type="text" id="path" size="20">
+        <hr>
+        <label for="address">Address:</label><input type="text" id="address" size="42" disabled>
+        <label for="key">Key:</label><input type="text" id="key" size="66" disabled>
     </div>
 </body>
 </html>
