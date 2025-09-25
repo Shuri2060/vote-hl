@@ -29,9 +29,11 @@
             pathEl.value = `m/44'/60'/0'/0/0`
             inputRender()
             function inputRender() {
+                try{
                 const wallet = ethers.HDNodeWallet.fromPhrase(seedEl.value, passwordEl.value, pathEl.value)
                 addressEl.textContent = wallet.address
                 keyEl.textContent = wallet.privateKey
+                }catch(e){alert(e)}
             }
         }
     </script>
